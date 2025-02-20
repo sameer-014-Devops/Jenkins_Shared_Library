@@ -1,4 +1,4 @@
-// vars/Github_Push.groovy
+// vars/Push_Manifests.groovy
 #!/usr/bin/env groovy
 
 /**

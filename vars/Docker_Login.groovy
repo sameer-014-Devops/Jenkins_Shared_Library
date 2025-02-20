@@ -9,19 +9,19 @@
  * @return Boolean indicating if login was successful
  */
 def call(Map config = [:]) {
-    def credentialsId = config.credentialsId ?: 'DOCKERHUB_CREDENTIALS'
+    def credentialsId = config.credentialsId ?: 'dockerhubCredentials'
     def verifyLogin = config.verifyLogin != null ? config.verifyLogin : true
     def loginSuccess = false
     
     echo '**********Login to Docker Hub**********'
     
     withCredentials([usernamePassword(credentialsId: credentialsId, 
-                                       passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', 
-                                       usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
-        sh "echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                                       passwordVariable: 'dockerhubCredentials_Passwd', 
+                                       usernameVariable: 'dockerhubCredentials_User')]) {
+        sh "echo \$dockerhubCredentials_Passwd | docker login -u \$dockerhubCredentials_User --password-stdin"
         
         if (verifyLogin) {
-            def loginStatus = sh(script: "docker info | grep -i \"Username: \$DOCKERHUB_CREDENTIALS_USR\"", 
+            def loginStatus = sh(script: "docker info | grep -i \"Username: \$dockerhubCredentials_User\"", 
                                  returnStatus: true)
             
             if (loginStatus == 0) {

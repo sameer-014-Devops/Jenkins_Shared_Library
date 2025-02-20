@@ -11,7 +11,7 @@
 def call(Map config = [:]) {
     def credentialsId = config.credentialsId ?: 'dockerhubCredentials'
     def verifyLogin = config.verifyLogin != null ? config.verifyLogin : true
-    def loginSuccess = false
+    def dockerLogin = false
     
     echo '**********Login to Docker Hub**********'
     
@@ -26,15 +26,15 @@ def call(Map config = [:]) {
             
             if (loginStatus == 0) {
                 echo '*********Docker Hub Login SUCCESSFUL*********'
-                loginSuccess = true
+                dockerLogin = true
             } else {
                 error '*********Docker Hub Login FAILED*********'
             }
         } else {
             // If verification is disabled, assume success based on login command
-            loginSuccess = true
+            dockerLogin = true
         }
     }
     
-    return loginSuccess
+    return dockerLogin
 }

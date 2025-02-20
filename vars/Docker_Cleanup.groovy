@@ -14,7 +14,7 @@
 def call(Map config = [:]) {
     def userName = config.userName ?: error("userName parameter is required")
     def appName = config.appName ?: error("appName parameter is required")
-    def version = config.defaultVersion ?: error("version parameter is required")
+    def version = config.defaultVersion ?: error("defaultVersion parameter is required")
     def cleanLatest = config.cleanLatest != null ? config.cleanLatest : true
     def cleanVersioned = config.cleanVersioned != null ? config.cleanVersioned : true
     def credentialsId = config.credentialsId ?: "dockerhubCredentials"

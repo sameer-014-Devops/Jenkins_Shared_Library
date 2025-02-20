@@ -11,7 +11,7 @@
  * @return The selected version (either user input or auto-incremented)
  */
 def call(Map config = [:]) {
-    def defaultVersion = config.defaultVersion ?: env.DEFAULT_VERSION ?: '1.0.0'
+    def defaultVersion = config.defaultVersion ?: env.defaultVersion ?: '1.0.0'
     def timeoutValue = config.timeout ?: 30
     def promptMessage = config.message ?: 'Please Provide The Version Of The Web Application'
     
@@ -25,7 +25,7 @@ def call(Map config = [:]) {
                 ok: 'Submit',
                 parameters: [string(defaultValue: defaultVersion, 
                                     description: 'Provide a new version number', 
-                                    name: 'new_ver')]
+                                    name: 'newVersion')]
             )
             
             // If input is provided, set it as the new version

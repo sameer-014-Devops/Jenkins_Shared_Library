@@ -1,4 +1,4 @@
-// vars/versionPrompt.groovy
+// vars/Getting_Version.groovy
 #!/usr/bin/env groovy
 
 /**

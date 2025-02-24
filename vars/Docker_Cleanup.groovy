@@ -1,34 +1,34 @@
-def call(String dockerUser, String userName, String appName, String newVersion, String defaultVersion) {
-    script {
+def call(String dockerUser, String userName, String appName, String newversion, String defaultVersion){
+    script{
         def latestTag = "${dockerUser}/${userName}-${appName}-img:latest"
-        def versionedTag = "${dockerUser}/${userName}-${appName}-img:${newVersion}"
-        def defaultTag = "${dockerUser}/${userName}-${appName}-img:${defaultVersion}"
+        def newversionTag = "${dockerUser}/${userName}-${appName}-img:${newversion}"
+        def defaultversionTag = "${dockerUser}/${userName}-${appName}-img:${defaultVersion}"
 
-        // Check and remove latest image if it exists
-        def latestImageExists = sh(script: 'docker images -q ${latestTag}', returnStdout: true).trim()
-        if (latestImageExists) {
-            echo "Docker Image with the latest tag already exists. Removing the existing image..."
-            sh 'docker rmi -f ${latestTag}'
+        // Check and Remove latest image if it exists
+        def latestImageExists = sh(script: "docker image ls | grep ${latestTag}", returnStatus: true).trim()
+        if(latestImageExists == 0){
+            echo "Latest image found () ${latestTag} ) Removing it"
+            sh "docker rmi ${latestTag}"
         } else {
-            echo "Docker Image with the latest tag does not exist."
+            echo "No latest image found"
         }
 
-        // Check and remove versioned image if it exists
-        def versionedImageExists = sh(script: 'docker images -q ${versionedTag}', returnStdout: true).trim()
-        if (versionedImageExists) {
-            echo "Docker Image with the specified version (${newVersion}) already exists. Removing the existing image..."
-            sh 'docker rmi -f ${versionedTag}'
+        // Check and Remove new version image if it exists
+        def newversionImageExists = sh(script: "docker image ls | grep ${newversionTag}", returnStatus: true).trim()
+        if(newversionImageExists == 0){
+            echo "New version image found () ${newversionTag} ) Removing it"
+            sh "docker rmi ${newversionTag}"
         } else {
-            echo "Docker Image with the specified version (${newVersion}) does not exist."
+            echo "No new version image found"
         }
 
-        // Check and remove versioned image if it exists
-        def defaultversionedImageExists = sh(script: 'docker images -q ${defaultTag}', returnStdout: true).trim()
-        if (defaultversionedImageExists) {
-            echo "Docker Image with the specified version (${defaultVersion}) already exists. Removing the existing image..."
-            sh 'docker rmi -f ${defaultTag}'
+        // Check and Remove default version image if it exists
+        def defaultversionImageExists = sh(script: "docker image ls | grep ${defaultversionTag}", returnStatus: true).trim()
+        if(defaultversionImageExists == 0){
+            echo "Default version image found () ${defaultversionTag} ) Removing it"
+            sh "docker rmi ${defaultversionTag}"
         } else {
-            echo "Docker Image with the specified version (${defaultVersion}) does not exist."
+            echo "No default version image found"
         }
     }
 }

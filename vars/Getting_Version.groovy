@@ -15,9 +15,10 @@ def call(Map config = [:]) {
                                     name: 'newVersion')]
             )
 
+            // If the user provides a version, return it immediately
             if (userVersion?.trim()) {
                 echo "The New Version Provided is: ${userVersion}"
-                return userVersion  // Return immediately to prevent fallback logic
+                return userVersion
             }
         }
     } catch (hudson.AbortException e) {
@@ -26,12 +27,17 @@ def call(Map config = [:]) {
         echo "Unexpected error: ${e.message}"
     }
 
-    // Auto-increment logic in case of timeout or error
+    // Ensure fallback logic only runs if input is not provided
+    if (!defaultVersion) {
+        echo "Invalid default version. Falling back to 1.0.1"
+        return "1.0.1"
+    }
+
     def versionParts = defaultVersion.tokenize('.')
     if (versionParts.size() == 3 && versionParts[2].isInteger()) {
         versionParts[2] = (versionParts[2] as Integer) + 1
     } else {
-        echo "Invalid version format detected, falling back to default increment logic."
+        echo "Invalid version format detected, using fallback version 1.0.1"
         return "1.0.1"
     }
 

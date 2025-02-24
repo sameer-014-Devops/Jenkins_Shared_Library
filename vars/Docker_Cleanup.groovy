@@ -5,7 +5,7 @@ def call(String dockerUser, String userName, String appName, String newversion, 
         def defaultversionTag = "${dockerUser}/${userName}-${appName}-img:${defaultVersion}"
 
         // Check and Remove latest image if it exists
-        def latestImageExists = sh(script: "docker image ls | grep ${latestTag}", returnStatus: true).trim()
+        def latestImageExists = sh(script: "docker image ls | grep ${latestTag}", returnStatus: true) 
         if(latestImageExists == 0){
             echo "Latest image found () ${latestTag} ) Removing it"
             sh "docker rmi ${latestTag}"
@@ -14,7 +14,7 @@ def call(String dockerUser, String userName, String appName, String newversion, 
         }
 
         // Check and Remove new version image if it exists
-        def newversionImageExists = sh(script: "docker image ls | grep ${newversionTag}", returnStatus: true).trim()
+        def newversionImageExists = sh(script: "docker image ls | grep ${newversionTag}", returnStatus: true)
         if(newversionImageExists == 0){
             echo "New version image found () ${newversionTag} ) Removing it"
             sh "docker rmi ${newversionTag}"
@@ -23,7 +23,7 @@ def call(String dockerUser, String userName, String appName, String newversion, 
         }
 
         // Check and Remove default version image if it exists
-        def defaultversionImageExists = sh(script: "docker image ls | grep ${defaultversionTag}", returnStatus: true).trim()
+        def defaultversionImageExists = sh(script: "docker image ls | grep ${defaultversionTag}", returnStatus: true)
         if(defaultversionImageExists == 0){
             echo "Default version image found () ${defaultversionTag} ) Removing it"
             sh "docker rmi ${defaultversionTag}"

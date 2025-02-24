@@ -17,7 +17,7 @@ def call(Map config = [:]) {
 
             if (userVersion?.trim()) {
                 echo "The New Version Provided is: ${userVersion}"
-                return userVersion
+                return userVersion  // Return immediately to prevent fallback logic
             }
         }
     } catch (hudson.AbortException e) {

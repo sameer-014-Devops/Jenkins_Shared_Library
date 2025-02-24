@@ -2,8 +2,8 @@ def call() {
     script {
         echo "The Default Version is: ${env.defaultVersion}"
         try {
-            timeout(time: 15, unit: 'SECONDS') {
-                // Prompt user to provide a new version number within 15 seconds
+            timeout(time: 20, unit: 'SECONDS') {
+                // Prompt user to provide a new version number within 20 seconds
                 def userVersion = input(
                     message: 'Please Provide The Version Of The Web Application',
                     ok: 'Submit',

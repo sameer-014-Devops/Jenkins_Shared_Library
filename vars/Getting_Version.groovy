@@ -7,18 +7,18 @@ def call() {
                 def userVersion = input(
                     message: 'Please Provide The Version Of The Web Application',
                     ok: 'Submit',
-                    parameters: [string(defaultValue: env.defaultVersion, description: 'Provide a new version number', name: 'newVersion')]
+                    parameters: [string(defaultValue: env.defaultVersion, description: 'Provide a new version number', name: 'newVer')]
                 )
                 // If input is provided, set it as the new version
-                env.newVersion = userVersion
-                echo "The New Version Provided is: ${env.newVersion}"
+                env.newVer = userVersion
+                echo "The New Version Provided is: ${env.newVer}"
             }
         } catch (Exception e) {
             // On timeout or abort, increment the default version number by 0.0.1
             def version = env.defaultVersion.tokenize('.')
             version[2] = (version[2] as Integer) + 1
-            env.newVersion = version.join('.')
-            echo "No Version Provided So The New Version Will: ${env.newVersion}"
+            env.newVer = version.join('.')
+            echo "No Version Provided So The New Version Will: ${env.newVer}"
         }
     }
 }

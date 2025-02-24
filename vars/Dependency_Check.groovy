@@ -1,7 +1,7 @@
 def call() {
     try {
         echo "########## Starting Dependency Check ##########"
-        dependencyCheck additionalArguments: "--scan ./ --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'OWASP'
+        dependencyCheck additionalArguments: "--scan ./ --nvdApiKey ${env.NVD_API_KEY}", odcInstallation: 'OWASP'
         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
         echo "########## Dependency Check Completed Successfully ##########"
     } catch (Exception e) {

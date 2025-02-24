@@ -5,30 +5,30 @@ def call(String dockerUser, String userName, String appName, String newVersion, 
         def defaultTag = "${dockerUser}/${userName}-${appName}-img:${defaultVersion}"
 
         // Check and remove latest image if it exists
-        def latestImageExists = docker.imageExists(latestTag).exists()
+        def latestImageExists = sh(script: 'docker images -q $latestTag', returnStdout: true).trim()
         if (latestImageExists) {
-            echo "Docker image ${latestTag} exists. Removing it..."
-            docker.image(latestTag).remove()
+            echo "Docker Image with the latest tag already exists. Removing the existing image..."
+            sh 'docker rmi -f $latestTag'
         } else {
-            echo "Docker image ${latestTag} does not exist."
+            echo "Docker Image with the latest tag does not exist."
         }
 
         // Check and remove versioned image if it exists
-        def versionedImageExists = docker.imageExists(versionedTag).exists()
+        def versionedImageExists = sh(script: 'docker images -q $versionedTag', returnStdout: true).trim()
         if (versionedImageExists) {
-            echo "Docker image ${versionedTag} exists. Removing it..."
-            docker.image(versionedTag).remove()
+            echo "Docker Image with the specified version (${newVersion}) already exists. Removing the existing image..."
+            sh 'docker rmi -f $versionedTag'
         } else {
-            echo "Docker image ${versionedTag} does not exist."
+            echo "Docker Image with the specified version (${newVersion}) does not exist."
         }
 
-        // Check and remove default image if it exists
-        def defaultImageExists = docker.imageExists(defaultTag).exists()
-        if (defaultImageExists) {
-            echo "Docker image ${defaultTag} exists. Removing it..."
-            docker.image(defaultTag).remove()
+        // Check and remove versioned image if it exists
+        def defaultversionedImageExists = sh(script: 'docker images -q $defaultTag', returnStdout: true).trim()
+        if (defaultversionedImageExists) {
+            echo "Docker Image with the specified version (${defaultVersion}) already exists. Removing the existing image..."
+            sh 'docker rmi -f $defaultTag'
         } else {
-            echo "Docker image ${defaultTag} does not exist."
+            echo "Docker Image with the specified version (${defaultVersion}) does not exist."
         }
     }
 }

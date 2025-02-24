@@ -1,4 +1,7 @@
 def call(String userName, String appName, String newVersion, String defaultVersion) {
+    def credentialsId = config.credentialsId ?: 'dockerhubCredentials'
+    withCredentials([usernamePassword(credentialsId: credentialsId,
+    passwordVariable: 'dockerhubCredentials_Passwd',usernameVariable: 'dockerhubCredentials_User')])
     try {
         def latestImageExists = sh(script: """docker images -q $dockerhubCredentials_User/${userName}-${appName}-img:latest""", returnStdout: true).trim()
 

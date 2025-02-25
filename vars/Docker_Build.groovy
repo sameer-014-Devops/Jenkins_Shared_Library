@@ -17,10 +17,10 @@ def call(String dockerUser, String userName, String appName, String tierName, St
         //verify the build
         def latestImageExists = sh(script:"docker images -q ${latestTag}", returnStdout: true).trim()
         def newversionImageExists = sh(script:"docker images -q ${newversionTag}", returnStdout: true).trim()
-        if ((latestImageExists) && (newversionImageExists)){
+        if (latestImageExists && newversionImageExists){
             echo "*************** Docker Image Build Completed ***************"
-        } else if ((!latestImageExists) && (newversionImageExists)){
-            echo "*************** Docker Image Build Completed But Not Tagged with latest"
+        } else if (!latestImageExists && newversionImageExists){
+            echo "*************** Docker Image Build Completed But Not Tagged with latest ***************"
         } else {
             echo "*************** Docker Image Build Failed ***************"
         }

@@ -1,9 +1,19 @@
 def call(String dockerUser, String UserName, String AppName, String TierName, String NewVersion, String DefaultVersion) {
     script {
+        echo "Docker User: ${dockerUser}"
+        echo "User Name: ${UserName}"
+        echo "App Name: ${AppName}"
+        echo "Tier Name: ${TierName}"
+        echo "New Version: ${NewVersion}"
+        echo "Default Version: ${DefaultVersion}"
+
         def latestImageTag = "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:latest"
         def versionedImageTag = "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.NewVersion}"
         def defaultversionedImageTag = "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.DefaultVersion}"
 
+        echo "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:latest"
+        echo "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.NewVersion}"
+        echo "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.DefaultVersion}"
         def latestImageExists = sh(script: "docker images -q ${latestImageTag}", returnStdout: true).trim()
         
         if (latestImageExists) {

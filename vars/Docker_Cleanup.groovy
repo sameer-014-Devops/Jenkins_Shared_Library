@@ -2,7 +2,7 @@ def call (String dockerUser, String userName, String appName, String tierOne, St
     script {
         def cleanupImages = { tier ->
             echo "Starting cleanup for tier: ${tier}"
-            def imagePrefix = "${dockerUser}/${userName}-${appName}-${tier}-img"
+            def imagePrefix = "${env.dockerUser}/${env.userName}-${env.appName}-${tier}-img"
             
             try {
                 // First list all images to verify they exist
@@ -24,7 +24,7 @@ def call (String dockerUser, String userName, String appName, String tierOne, St
                 
                 try {
                     images.new = sh(
-                        script: "docker images -q ${imagePrefix}:${newVersion}",
+                        script: "docker images -q ${imagePrefix}:${env.newVersion}",
                         returnStdout: true
                     ).trim()
                     echo "Found new version image ID: ${images.new ?: 'none'}"
@@ -34,7 +34,7 @@ def call (String dockerUser, String userName, String appName, String tierOne, St
                 
                 try {
                     images.default = sh(
-                        script: "docker images -q ${imagePrefix}:${defaultVersion}",
+                        script: "docker images -q ${imagePrefix}:${env.defaultVersion}",
                         returnStdout: true
                     ).trim()
                     echo "Found default version image ID: ${images.default ?: 'none'}"
@@ -72,17 +72,17 @@ def call (String dockerUser, String userName, String appName, String tierOne, St
         try {
             echo "Starting Docker cleanup process..."
             echo "Parameters received:"
-            echo "dockerUser: ${dockerUser}"
-            echo "userName: ${userName}"
-            echo "appName: ${appName}"
-            echo "tierOne: ${tierOne}"
-            echo "tierTwo: ${tierTwo}"
-            echo "newVersion: ${newVersion}"
-            echo "defaultVersion: ${defaultVersion}"
+            echo "env.dockerUser: ${env.dockerUser}"
+            echo "env.userName: ${env.userName}"
+            echo "env.appName: ${env.appName}"
+            echo "env.tierOne: ${env.tierOne}"
+            echo "env.tierTwo: ${env.tierTwo}"
+            echo "env.newVersion: ${env.newVersion}"
+            echo "env.defaultVersion: ${env.defaultVersion}"
             
             parallel(
-                "cleanup-tier-one": { cleanupImages(tierOne) },
-                "cleanup-tier-two": { cleanupImages(tierTwo) }
+                "cleanup-tier-one": { cleanupImages(env.tierOne) },
+                "cleanup-tier-two": { cleanupImages(env.tierTwo) }
             )
             
             echo "Docker cleanup process completed successfully"

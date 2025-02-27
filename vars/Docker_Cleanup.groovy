@@ -10,11 +10,7 @@ def call(String dockerUser, String userName, String appName, String tierName, St
         try {
             // Use a loop to handle all image checks and removals
             imageTags.each { key, tag ->
-                def imageExists = sh(
-                    script: "docker images -q ${tag}",
-                    returnStdout: true,
-                    returnStatus: true
-                ).trim()
+                def latestImageExists = sh(script: "docker image ls | grep ${tag}", returnStatus: true).trim()
 
                 echo "Checking if Docker image ${tag} exists: ${imageExists}"
 
@@ -32,7 +28,6 @@ def call(String dockerUser, String userName, String appName, String tierName, St
             }
         } catch (Exception e) {
             echo "Error during Docker cleanup: ${e.message}"
-            currentBuild.result = 'FAILURE'  // Set build status
             error("Docker cleanup failed: ${e.message}")  // Throw error with more context
         }
     }

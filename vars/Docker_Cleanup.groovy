@@ -1,4 +1,4 @@
-def call(){
+def call(Sting dockerUser){
     script {
 
         def latestImageTag = "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"

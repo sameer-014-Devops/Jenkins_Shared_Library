@@ -1,4 +1,5 @@
 def call() {
+    
     try {
         echo "########## Starting Dependency Check ##########"
         dependencyCheck additionalArguments: "--scan ./", odcInstallation: 'OWASP'
@@ -9,4 +10,5 @@ def call() {
         echo "Error: ${e.message}"
         throw e
     }
+    
 }

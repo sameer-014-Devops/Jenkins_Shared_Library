@@ -1,6 +1,5 @@
 def call(String dockerUser, String UserName, String AppName, String TierName, String NewVersion, String DefaultVersion) {
     script {
-        echo "Docker User: ${dockerUser}"
         echo "User Name: ${UserName}"
         echo "App Name: ${AppName}"
         echo "Tier Name: ${TierName}"

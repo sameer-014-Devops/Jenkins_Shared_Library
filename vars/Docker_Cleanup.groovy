@@ -1,28 +1,39 @@
-def call(String dockerUser, String userName, String appName, String tierOne, String tierTwo, String newVersion, String defaultVersion) {
-    script {
-        def latestTag = "${dockerUser}/${userName}-${appName}-${tierOne}-img:latest"
-        def newTag = "${dockerUser}/${userName}-${appName}-${tierOne}-img:${newVersion}"
-        def defaultTag = "${dockerUser}/${userName}-${appName}-${tierOne}-img:${defaultVersion}"
-        def latestTagTwo = "${dockerUser}/${userName}-${appName}-${tierTwo}-img:latest"
-        def newTagTwo = "${dockerUser}/${userName}-${appName}-${tierTwo}-img:${newVersion}"
-        def defaultTagTwo = "${dockerUser}/${userName}-${appName}-${tierTwo}-img:${defaultVersion}"
+def call (String dockerUser, String userName, String appName, String tierOne, String tierTwo, String newVersion, String defaultVersion){
 
-        // Checking the image present or not, if present then remove it
-        def imageTags = [
-            latestTag,
-            newTag,
-            defaultTag,
-            latestTagTwo,
-            newTagTwo,
-            defaultTagTwo
-        ]
+    script{
+
+        def latestImage1Exists = sh(script: "docker images -q ${dockerUser}/${userName}-${appName}-${tierOne}-img:latest", returnStdout: true).trim()
+
+        def versionImage1Exists = sh(script: "docker images -q ${dockerUser}/${userName}-${appName}-${tierOne}-img:${newVersion}", returnStdout: true).trim()
+
+        def defaultImage1Exists = sh(script: "docker images -q ${dockerUser}/${userName}-${appName}-${tierOne}-img:${defaultVersion}", returnStdout: true).trim()
+
+        def image1Tags = [ latestImage1Exists, versionImage1Exists, defaultImage1Exists ]
         try {
-            imageTags.each { tag ->
-                sh "docker rmi -f ${tag}"
-                echo "Image ${tag} removed successfully..."
+            for (imageTag in image1Tags) {
+                if (imageTag != "") {
+                    sh "docker rmi -f ${imageTag}"
+                }
             }
         } catch (Exception e) {
-            echo "Image ${tag} not found..."
+            echo "Error: ${e}"
+        }
+
+        def latestImage2Exists = sh(script: "docker images -q ${dockerUser}/${userName}-${appName}-${tierTwo}-img:latest", returnStdout: true).trim()
+
+        def versionImage2Exists = sh(script: "docker images -q ${dockerUser}/${userName}-${appName}-${tierTwo}-img:${newVersion}", returnStdout: true).trim()
+
+        def defaultImage2Exists = sh(script: "docker images -q ${dockerUser}/${userName}-${appName}-${tierTwo}-img:${defaultVersion}", returnStdout: true).trim()
+
+        def image2Tags = [ latestImage2Exists, versionImage2Exists, defaultImage2Exists ]
+        try {
+            for (imageTag in image2Tags) {
+                if (imageTag != "") {
+                    sh "docker rmi -f ${imageTag}"
+                }
+            }
+        } catch (Exception e) {
+            echo "Error: ${e}"
         }
     }
 }

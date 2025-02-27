@@ -17,7 +17,7 @@ def call(String dockerUser, String userName, String appName, String tierOne, Str
             defaultTagTwo
         ]
         try {
-            imageTags.each { key, tag ->
+            imageTags.each { tag ->
                 sh "docker rmi -f ${tag}"
                 echo "Image ${tag} removed successfully..."
             }

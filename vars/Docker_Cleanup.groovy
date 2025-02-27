@@ -1,34 +1,28 @@
-def call(String dockerUser, String userName, String appName, String tierName, String newVersion, String defaultVersion) {
+def call(String dockerUser, String userName, String appName, String tierOne, String tierTwo, String newVersion, String defaultVersion) {
     script {
-        // Define all tags at once in a map for better organization and maintenance
+        def latestTag = "${dockerUser}/${userName}-${appName}-${tierOne}-img:latest"
+        def newTag = "${dockerUser}/${userName}-${appName}-${tierOne}-img:${newVersion}"
+        def defaultTag = "${dockerUser}/${userName}-${appName}-${tierOne}-img:${defaultVersion}"
+        def latestTagTwo = "${dockerUser}/${userName}-${appName}-${tierTwo}-img:latest"
+        def newTagTwo = "${dockerUser}/${userName}-${appName}-${tierTwo}-img:${newVersion}"
+        def defaultTagTwo = "${dockerUser}/${userName}-${appName}-${tierTwo}-img:${defaultVersion}"
+
+        // Checking the image present or not, if present then remove it
         def imageTags = [
-            latest: "${dockerUser}/${userName}-${appName}-${tierName}-img:latest",
-            newVersion: "${dockerUser}/${userName}-${appName}-${tierName}-img:${newVersion}",
-            defaultVersion: "${dockerUser}/${userName}-${appName}-${tierName}-img:${defaultVersion}"
+            latestTag,
+            newTag,
+            defaultTag,
+            latestTagTwo,
+            newTagTwo,
+            defaultTagTwo
         ]
-
         try {
-            // Use a loop to handle all image checks and removals
             imageTags.each { key, tag ->
-                def latestImageExists = sh(script: "docker image ls | grep ${tag}", returnStatus: true).trim()
-
-                echo "Checking if Docker image ${tag} exists: ${imageExists}"
-
-                if (imageExists) {
-                    echo "Docker Image ${tag} already exists - Removing it Now..."
-                    def removeStatus = sh(script: "docker rmi -f ${tag}", returnStatus: true)
-                    if (removeStatus != 0) {
-                        echo "Failed to remove Docker image ${tag} with status ${removeStatus}"
-                    } else {
-                        echo "Successfully removed Docker image ${tag}"
-                    }
-                } else {
-                    echo "Docker Image ${tag} does not exist..."
-                }
+                sh "docker rmi -f ${tag}"
+                echo "Image ${tag} removed successfully..."
             }
         } catch (Exception e) {
-            echo "Error during Docker cleanup: ${e.message}"
-            error("Docker cleanup failed: ${e.message}")  // Throw error with more context
+            echo "Image ${tag} not found..."
         }
     }
 }

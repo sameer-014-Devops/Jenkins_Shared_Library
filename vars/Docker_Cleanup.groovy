@@ -1,18 +1,13 @@
-def call(String dockerUser, String UserName, String AppName, String TierName, String NewVersion, String DefaultVersion) {
+def call(){
     script {
-        echo "User Name: ${UserName}"
-        echo "App Name: ${AppName}"
-        echo "Tier Name: ${TierName}"
-        echo "New Version: ${NewVersion}"
-        echo "Default Version: ${DefaultVersion}"
 
-        def latestImageTag = "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:latest"
-        def versionedImageTag = "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.NewVersion}"
-        def defaultversionedImageTag = "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.DefaultVersion}"
+        def latestImageTag = "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
+        def versionedImageTag = "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}"
+        def defaultversionedImageTag = "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.defaultVersion}"
 
-        echo "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:latest"
-        echo "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.NewVersion}"
-        echo "${env.dockerUser}/${env.UserName}-${env.AppName}-${env.TierName}-img:${env.DefaultVersion}"
+        echo "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
+        echo "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.NewVersion}"
+        echo "${env.dockerUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.DefaultVersion}"
         def latestImageExists = sh(script: "docker images -q ${latestImageTag}", returnStdout: true).trim()
         
         if (latestImageExists) {

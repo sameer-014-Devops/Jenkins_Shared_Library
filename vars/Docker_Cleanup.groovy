@@ -15,6 +15,8 @@ def call(String dockerUser, String userName, String appName, String tierName, St
                     returnStdout: true
                 ).trim()
 
+                echo "Checking if Docker image ${tag} exists: ${imageExists}"
+
                 if (imageExists) {
                     echo "Docker Image ${tag} already exists - Removing it Now..."
                     sh "docker rmi -f ${tag} || true"  // Added || true to prevent failure if image is in use

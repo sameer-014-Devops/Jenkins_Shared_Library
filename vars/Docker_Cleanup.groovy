@@ -20,9 +20,11 @@ def call(String dockerUser, String userName, String appName, String tierName, St
 
                 if (imageExists) {
                     echo "Docker Image ${tag} already exists - Removing it Now..."
-                    def removeStatus = sh(script: "docker rmi -f ${tag} || true", returnStatus: true)
+                    def removeStatus = sh(script: "docker rmi -f ${tag}", returnStatus: true)
                     if (removeStatus != 0) {
-                        echo "Failed to remove Docker image ${tag}"
+                        echo "Failed to remove Docker image ${tag} with status ${removeStatus}"
+                    } else {
+                        echo "Successfully removed Docker image ${tag}"
                     }
                 } else {
                     echo "Docker Image ${tag} does not exist..."

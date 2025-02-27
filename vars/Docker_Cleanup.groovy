@@ -1,5 +1,7 @@
 def call(String dockerUser, String userName, String appName, String tierName, String newVersion, String defaultVersion) {
+    
     script {
+        
         def latestTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:latest"
         def newVersionTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:${newVersion}"
         def defaultVersionTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:${defaultVersion}"
@@ -38,5 +40,7 @@ def call(String dockerUser, String userName, String appName, String tierName, St
             echo "Error during Docker cleanup: ${e.message}"
             throw e
         }
+        
     }
+    
 }

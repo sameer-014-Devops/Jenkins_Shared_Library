@@ -1,5 +1,7 @@
 def call() {
+    
     script {
+        
         echo "The Default Version is: ${env.defaultVersion}"
         try {
             timeout(time: 20, unit: 'SECONDS') {
@@ -20,5 +22,7 @@ def call() {
             env.newVersion = version.join('.')
             echo "No Version Provided So The New Version Will: ${env.newVersion}"
         }
+        
     }
+    
 }

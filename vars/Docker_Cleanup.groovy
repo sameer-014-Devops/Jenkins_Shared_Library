@@ -12,14 +12,18 @@ def call(String dockerUser, String userName, String appName, String tierName, St
             imageTags.each { key, tag ->
                 def imageExists = sh(
                     script: "docker images -q ${tag}",
-                    returnStdout: true
+                    returnStdout: true,
+                    returnStatus: true
                 ).trim()
 
                 echo "Checking if Docker image ${tag} exists: ${imageExists}"
 
                 if (imageExists) {
                     echo "Docker Image ${tag} already exists - Removing it Now..."
-                    sh "docker rmi -f ${tag} || true"  // Added || true to prevent failure if image is in use
+                    def removeStatus = sh(script: "docker rmi -f ${tag} || true", returnStatus: true)
+                    if (removeStatus != 0) {
+                        echo "Failed to remove Docker image ${tag}"
+                    }
                 } else {
                     echo "Docker Image ${tag} does not exist..."
                 }

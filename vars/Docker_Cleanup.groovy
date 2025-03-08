@@ -10,53 +10,53 @@ def call(){
         def newImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:" + env.newVersion
 
 
-        def latestImageExistsOne = sh(script: 'docker images -q $latestImageOne', returnStdout: true).trim()
+        def latestImageExistsOne = sh(script: "docker images -q $latestImageOne", returnStdout: true).trim()
         if (latestImageExistsOne) {
-            echo "********** Docker Image ${latestImageOne} already exists... Removing the existing Image **********"
+            echo "********** Docker Image $latestImageOne already exists... Removing the existing Image **********"
             sh "docker rmi -f $latestImageOne"
         } else {
-            echo "********** Docker Image ${latestImageOne} does not exist **********"
+            echo "********** Docker Image $latestImageOne does not exist **********"
         }
 
 
-        def latestImageExistsTwo = sh(script: 'docker images -q $latestImageTwo', returnStdout: true).trim()
+        def latestImageExistsTwo = sh(script: "docker images -q $latestImageTwo", returnStdout: true).trim()
         if (latestImageExistsTwo) {
-            echo "********** Docker Image ${latestImageTwo} already exists... Removing the existing Image **********"
+            echo "********** Docker Image $latestImageTwo already exists... Removing the existing Image **********"
             sh "docker rmi -f $latestImageTwo"
         } else {
-            echo "********** Docker Image ${latestImageTwo} does not exist **********"
+            echo "********** Docker Image $latestImageTwo does not exist **********"
         }
 
-        def defaultImageExistsOne = sh(script: "docker images -q ${defaultImageOne}", returnStatus: true).trim()
+        def defaultImageExistsOne = sh(script: "docker images -q $defaultImageOne", returnStatus: true).trim()
         if (defaultImageExistsOne) {
-            echo "**********Docker Image ${defaultImageOne} already exists... Removing the existing Image**********"
+            echo "**********Docker Image $defaultImageOne already exists... Removing the existing Image**********"
             sh "docker rmi -f $defaultImageOne"
         } else {
-            echo "**********Docker Image ${defaultImageOne} does not exist**********"
+            echo "**********Docker Image $defaultImageOne does not exist**********"
         }
 
-        def defaultVersionExistsTwo = sh(script: "docker images -q ${defaultImageTwo}", returnStatus: true).trim()
+        def defaultVersionExistsTwo = sh(script: "docker images -q $defaultImageTwo", returnStatus: true).trim()
         if (defaultVersionExistsTwo) {
-            echo "**********Docker Image ${defaultImageTwo} already exists... Removing the existing Image**********"
+            echo "**********Docker Image $defaultImageTwo already exists... Removing the existing Image**********"
             sh "docker rmi -f $defaultImageTwo"
         } else {
-            echo "**********Docker Image ${defaultImageTwo} does not exist**********"
+            echo "**********Docker Image $defaultImageTwo does not exist**********"
         }
 
-        def newVersionExistsOne = sh(script: "docker images -q ${newImageOne}", returnStatus: true)
+        def newVersionExistsOne = sh(script: "docker images -q $newImageOne", returnStatus: true)
         if (newVersionExistsOne) {
-            echo "**********Docker Image ${newImageOne} already exists... Removing the existing Image**********"
+            echo "**********Docker Image $newImageOne already exists... Removing the existing Image**********"
             sh "docker rmi -f $newImageOne"
         } else {
-            echo "**********Docker Image ${newImageOne} does not exist**********"
+            echo "**********Docker Image $newImageOne does not exist**********"
         }
 
-        def newVersionExistsTwo = sh(script: "docker images -q ${newImageTwo}", returnStatus: true)
+        def newVersionExistsTwo = sh(script: "docker images -q $newImageTwo", returnStatus: true)
         if (newVersionExistsTwo) {
-            echo "**********Docker Image ${newImageTwo} already exists... Removing the existing Image**********"
+            echo "**********Docker Image $newImageTwo already exists... Removing the existing Image**********"
             sh "docker rmi -f $newImageTwo"
         } else {
-            echo "**********Docker Image ${newImageTwo} does not exist**********"
+            echo "**********Docker Image $newImageTwo does not exist**********"
         }
 
     }

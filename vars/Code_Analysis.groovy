@@ -7,7 +7,7 @@ def call(){
         def Projectkey = env.userName
 
         withSonarQubeEnv("${SonarQubeAPI}"){
-            sh "sonar-scanner -Dsonar.projectName=${Projectname} -Dsonar.projectKey=${ProjectKey} -X"
+          sh "$sonarHome/bin/sonar-scanner -Dsonar.projectName=${Projectname} -Dsonar.projectKey=${ProjectKey} -X"
         }
     }
 }

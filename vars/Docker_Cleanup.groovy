@@ -12,50 +12,50 @@ def call(){
 
         def latestImageExistsOne = sh(script: "docker images -q ${latestImageOne}", returnStatus: true)
         if (latestImageExistsOne) {
-            echo "Docker Image ${env.appName}-${env.tierOne}-img:latest already exists. Removing the existing image..."
+            echo "Docker Image ${laestImageOne} already exists. Removing the existing image..."
             sh "docker rmi -f ${latestImageOne}"
         } else {
-            echo "Docker ${env.appName}-${env.tierOne} Image with the latest tag does not exist."
+            echo "Docker Image ${latestImageOne} does not exist."
         }
 
         def latestImageExistsTwo = sh(script: "docker images -q ${latestImageTwo}", returnStatus: true)
         if (latestImageExistsTwo) {
-            echo "Docker Image ${env.appName}-${env.tierTwo}-img:latest already exists. Removing the existing image..."
+            echo "Docker Image ${latestImageTwo} already exists. Removing the existing image..."
             sh "docker rmi -f ${latestImageTwo}"
         } else {
-            echo "Docker ${env.appName}-${env.tierTwo} Image with the latest tag does not exist."
+            echo "Docker Image ${latestImageTwo} does not exist."
         }
 
         def defaultImageExistsOne = sh(script: "docker images -q ${defaultImageOne}", returnStatus: true)
         if (defaultImageExistsOne) {
-            echo "Docker Image ${env.appName}-${env.tierOne}-img:${env.defaultVersion} already exists. Removing the existing image..."
+            echo "Docker Image ${defaultImageOne} already exists. Removing the existing image..."
             sh "docker rmi -f ${defaultImageOne}"
         } else {
-            echo "Docker ${env.appName}-${env.tierOne} Image with the default version does not exist."
+            echo "Docker Image ${defaultImageOne} does not exist."
         }
 
         def defaultVersionExistsTwo = sh(script: "docker images -q ${defaultImageTwo}", returnStatus: true)
         if (defaultVersionExistsTwo) {
-            echo "Docker Image ${env.appName}-${env.tierTwo}-img:${env.defaultVersion} already exists. Removing the existing image..."
+            echo "Docker Image ${defaultImageTwo} already exists. Removing the existing image..."
             sh "docker rmi -f ${defaultImageTwo}"
         } else {
-            echo "Docker ${env.appName}-${env.tierTwo} Image with the default version does not exist."
+            echo "Docker Image ${defaultImageTwo} does not exist."
         }
 
-        def newVersionExistsOne = sh(script: "docker images -q ${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}", returnStatus: true)
-        if (newVersionExistsOne == 0) {
-            echo "Docker Image ${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion} already exists. Removing the existing image..."
+        def newVersionExistsOne = sh(script: "docker images -q ${newImageOne}", returnStatus: true)
+        if (newVersionExistsOne) {
+            echo "Docker Image ${newImageOne} already exists. Removing the existing image..."
             sh "docker rmi -f ${newImageOne}"
         } else {
-            echo "Docker ${env.appName}-${env.tierOne} Image with the new version does not exist."
+            echo "Docker Image ${newImageOne} does not exist."
         }
 
-        def newVersionExistsTwo = sh(script: "docker images -q ${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.newVersion}", returnStatus: true)
-        if (newVersionExistsTwo == 0) {
-            echo "Docker Image ${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.newVersion} already exists. Removing the existing image..."
+        def newVersionExistsTwo = sh(script: "docker images -q ${newImageTwo}", returnStatus: true)
+        if (newVersionExistsTwo) {
+            echo "Docker Image ${newImageTwo} already exists. Removing the existing image..."
             sh "docker rmi -f ${newImageTwo}"
         } else {
-            echo "Docker ${env.appName}-${env.tierTwo} Image with the new version does not exist."
+            echo "Docker Image ${newImageTwo} does not exist."
         }
 
     }

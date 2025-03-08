@@ -1,7 +1,7 @@
 def call(){
     
     script {
-        echo "${env.dockerhubUser}"
+        
         def latestImageExistsOne = sh(script: "docker images -q ${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest", returnStatus: true).trim()
         if (latestImageExistsOne == 0) {
             echo "Docker Image ${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest already exists. Removing the existing image..."

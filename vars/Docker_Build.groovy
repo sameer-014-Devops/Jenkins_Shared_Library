@@ -28,7 +28,7 @@ def call(){
         if (latestImageExistsOne && latestImageExistsTwo) {
             echo "**********Docker Images are Built and Tagged Successfully**********" 
         } else {
-            echo "**********Docker Images are NOT Built and Tagged**********"
+            error "**********Docker Images are NOT Built and Tagged**********"
         }
     }
 }

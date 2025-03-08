@@ -2,12 +2,12 @@ def call(){
 
     script {
 
-        def latestImageOne = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
-        def defaultImageOne = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.defaultVersion}"
-        def newImageOne = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}"
-        def latestImageTwo = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:latest"
-        def defaultImageTwo = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.defaultVersion}"
-        def newImageTwo = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.newVersion}"
+        def latestImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
+        def defaultImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.defaultVersion}"
+        def newImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}"
+        def latestImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:latest"
+        def defaultImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.defaultVersion}"
+        def newImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.newVersion}"
 
 
         def latestImageExistsOne = sh(script: "docker images -q ${latestImageOne}", returnStatus: true)
@@ -15,7 +15,7 @@ def call(){
             echo "Docker Image ${laestImageOne} already exists. Removing the existing image..."
             sh "docker rmi -f ${latestImageOne}"
         } else {
-            echo "Docker Image ${latestImageOne} does not exist."
+            echo "**********Docker Image ${latestImageOne} does not exist**********"
         }
 
         def latestImageExistsTwo = sh(script: "docker images -q ${latestImageTwo}", returnStatus: true)
@@ -23,7 +23,7 @@ def call(){
             echo "Docker Image ${latestImageTwo} already exists. Removing the existing image..."
             sh "docker rmi -f ${latestImageTwo}"
         } else {
-            echo "Docker Image ${latestImageTwo} does not exist."
+            echo "**********Docker Image ${latestImageTwo} does not exist**********"
         }
 
         def defaultImageExistsOne = sh(script: "docker images -q ${defaultImageOne}", returnStatus: true)
@@ -31,7 +31,7 @@ def call(){
             echo "Docker Image ${defaultImageOne} already exists. Removing the existing image..."
             sh "docker rmi -f ${defaultImageOne}"
         } else {
-            echo "Docker Image ${defaultImageOne} does not exist."
+            echo "**********Docker Image ${defaultImageOne} does not exist**********"
         }
 
         def defaultVersionExistsTwo = sh(script: "docker images -q ${defaultImageTwo}", returnStatus: true)
@@ -39,7 +39,7 @@ def call(){
             echo "Docker Image ${defaultImageTwo} already exists. Removing the existing image..."
             sh "docker rmi -f ${defaultImageTwo}"
         } else {
-            echo "Docker Image ${defaultImageTwo} does not exist."
+            echo "**********Docker Image ${defaultImageTwo} does not exist**********"
         }
 
         def newVersionExistsOne = sh(script: "docker images -q ${newImageOne}", returnStatus: true)
@@ -47,7 +47,7 @@ def call(){
             echo "Docker Image ${newImageOne} already exists. Removing the existing image..."
             sh "docker rmi -f ${newImageOne}"
         } else {
-            echo "Docker Image ${newImageOne} does not exist."
+            echo "**********Docker Image ${newImageOne} does not exist**********"
         }
 
         def newVersionExistsTwo = sh(script: "docker images -q ${newImageTwo}", returnStatus: true)
@@ -55,7 +55,7 @@ def call(){
             echo "Docker Image ${newImageTwo} already exists. Removing the existing image..."
             sh "docker rmi -f ${newImageTwo}"
         } else {
-            echo "Docker Image ${newImageTwo} does not exist."
+            echo "**********Docker Image ${newImageTwo} does not exist**********"
         }
 
     }

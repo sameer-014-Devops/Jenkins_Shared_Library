@@ -2,7 +2,7 @@ def call(){
 
     script {
 
-        def latestImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
+        def latestImageOne = '$dockerhubUser/${env.userName}-${env.appName}-${env.tierOne}-img:latest'
         def defaultImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.defaultVersion}"
         def newImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}"
         def latestImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:latest"

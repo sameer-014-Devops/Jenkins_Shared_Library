@@ -1,13 +1,17 @@
-def call(String dockerUser, String dockerPasswd){
-    
-    script{
-        
-        sh "echo ${dockerPasswd} | docker login -u ${dockerUser} --password-stdin"
-        if (sh(script: "docker info | grep -i 'Username: ${dockerUser}'", returnStatus: true) == 0) {
-            echo "********* DockerHub Login SUCCESSFUL with User ${dockerUser} *********"
+def call(){
+
+    script {
+
+        def userName = env.dockerhubUser
+        def password = env.dockerhubPasswd
+        sh "echo $password | docker login -u $userName --password-stdin"
+
+        // Check if the login is successful
+        if (sh(script: 'docker info | grep -i "Username: ${userName}"', returnStatus: true) == 0) {
+            echo '***********DockerHub login SUCCESSFUL***********'
         } else {
-            error '********* DockerHub Login FAILED *********'
+            error '**********DockerHub login FAILED**********'
         }
-        
+
     }
 }

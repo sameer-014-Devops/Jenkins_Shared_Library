@@ -9,20 +9,20 @@ def call(){
         def defaultImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:" + env.defaultVersion
         def newImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:" + env.newVersion
 
-        def latestImageExistsOne = sh(script: 'docker images -q $latestImageOne', returnStdout: true)
+        def latestImageExistsOne = sh(script: "docker images -q $latestImageOne", returnStdout: true)
         if (latestImageExistsOne) {
-            echo "********** Docker Image ${latestImageOne} already exists... Removing the existing Image **********"
+            echo "********** Docker Image $latestImageOne already exists... Removing the existing Image **********"
             sh "docker rmi -f $latestImageOne"
         } else {
-            echo "********** Docker Image ${latestImageOne} does not exist **********"
+            echo "********** Docker Image $latestImageOne does not exist **********"
         }
 
-        def latestImageExistsTwo = sh(script: 'docker images -q $latestImageTwo', returnStdout: true)
+        def latestImageExistsTwo = sh(script: "docker images -q $latestImageTwo", returnStdout: true)
         if (latestImageExistsTwo) {
-            echo "********** Docker Image ${latestImageTwo} already exists... Removing the existing Image **********"
+            echo "********** Docker Image $latestImageTwo already exists... Removing the existing Image **********"
             sh "docker rmi -f $latestImageTwo"
         } else {
-            echo "********** Docker Image ${latestImageTwo} does not exist **********"
+            echo "********** Docker Image $latestImageTwo does not exist **********"
         }
 
         def defaultImageExistsOne = sh(script: "docker images -q $defaultImageOne", returnStatus: true)

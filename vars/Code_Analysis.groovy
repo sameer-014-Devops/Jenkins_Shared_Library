@@ -6,8 +6,14 @@ def call(){
         def Projectname = env.appName
         def Projectkey = env.userName
 
-        withSonarQubeEnv("${SonarQubeAPI}"){
-          sh "$sonarHome/bin/sonar-scanner -Dsonar.projectName=${Projectname} -Dsonar.projectKey=${ProjectKey} -X"
+        withSonarQubeEnv("${SonarQubeAPI}") {
+            sh """
+                sonar-scanner \
+                -Dsonar.projectName=${Projectname} \
+                -Dsonar.projectKey=${Projectkey} \
+                -Dsonar.working.directory=\$WORKSPACE/.scannerwork \
+                -Dsonar.verbose=true
+            """
         }
     }
 }

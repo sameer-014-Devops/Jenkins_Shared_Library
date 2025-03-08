@@ -2,12 +2,12 @@ def call(){
 
     script {
 
-        def latestImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
-        def defaultImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.defaultVersion}"
-        def newImageOne = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}"
-        def latestImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:latest"
-        def defaultImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.defaultVersion}"
-        def newImageTwo = "${env.dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.newVersion}"
+        def latestImageOne = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:latest"
+        def defaultImageOne = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.defaultVersion}"
+        def newImageOne = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierOne}-img:${env.newVersion}"
+        def latestImageTwo = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:latest"
+        def defaultImageTwo = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.defaultVersion}"
+        def newImageTwo = "${dockerhubUser}/${env.userName}-${env.appName}-${env.tierTwo}-img:${env.newVersion}"
 
 
         def latestImageExistsOne = sh(script: "docker images -q ${latestImageOne}", returnStatus: true)

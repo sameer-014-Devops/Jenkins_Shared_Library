@@ -1,29 +1,34 @@
-def call(String dockerUser, String userName, String appName, String tierName, String newversion){
-    
-    script{
+def call(){
 
-        def latestTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:latest"
-        def newversionTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:${newversion}"
+    script {
 
-        // LogOuting dockerhub account
-        sh 'docker logout'
+        def latestImageOne = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierOne + "-img:latest"
+        def newImageOne = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierOne + "-img:" + env.newVersion
+        def latestImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:latest"
+        def newImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:" + env.newVersion
 
-        // Building Docker image
-        sh "docker build -t ${newversionTag} ."
+        // Log Out the DockerHub Account
+        sh "docker logout"
+        // Build the Docker Image for Tier One
+        echo "**********Building the Docker Image $newImageOne**********"
+        sh "docker build -t $newImageOne ."
+        // Tag the Docker Image for Tier One
+        echo "**********Tagging the Docker Image $newImageOne**********"
+        sh "docker tag $newImageOne $latestImageOne"
+        // Build the Docker Image for Tier Two
+        echo "**********Building the Docker Image $newImageTwo**********"
+        sh "docker build -t $newImageTwo ."
+        // Tag the Docker Image for Tier Two
+        echo "**********Tagging the Docker Image $newImageTwo**********"
+        sh "docker tag $newImageTwo $latestImageTwo"
+        echo "**********Docker Images are Built and Tagged Successfully**********"
         
-        // Tag as latest
-        sh "docker tag ${newversionTag} ${latestTag}"
-
-        //verify the build
-        def latestImageExists = sh(script:"docker images -q ${latestTag}", returnStdout: true).trim()
-        def newversionImageExists = sh(script:"docker images -q ${newversionTag}", returnStdout: true).trim()
-        if (latestImageExists && newversionImageExists){
-            echo "*************** Docker Image Build Completed ***************"
-        } else if (!latestImageExists && newversionImageExists){
-            echo "*************** Docker Image Build Completed But Not Tagged with latest ***************"
+        def latestImageExistsOne = sh(script: "docker images -q $latestImageOne", returnStdout: true)
+        def latestImageExistsTwo = sh(script: "docker images -q $latestImageTwo", returnStdout: true)
+        if (latestImageExistsOne && latestImageExistsTwo) {
+            echo "**********Docker Images are Built and Tagged Successfully**********" 
         } else {
-            echo "*************** Docker Image Build Failed ***************"
+            echo "**********Docker Images are NOT Built and Tagged**********"
         }
-        
     }
 }

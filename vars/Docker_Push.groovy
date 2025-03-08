@@ -1,16 +1,24 @@
-def call(String dockerUser, String userName, String appName, String tierName, String newversion){
-    
-    script{
-        def latestTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:latest"
-        def newversionTag = "${dockerUser}/${userName}-${appName}-${tierName}-img:${newversion}"
+def call(){
 
-        // Pushing to DockerHub Repository
-        echo "******** Pushing Docker Image ${newversionTag} To Repository ********"
-        sh "docker push ${newversionTag}"
-        echo "******** Pushing Docker Image ${newversionTag} Completed ********"
+    script {
 
-        echo "******** Pushing Docker Image ${latestTag} To Repository ********"
-        sh "docker push ${latestTag}"
-        echo "******** Pushing Docker Image ${latestTag} Completed ********"
+        def latestImageOne = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierOne + "-img:latest"
+        def newImageOne = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierOne + "-img:" + env.newVersion
+        def latestImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:latest"
+        def newImageTwo = env.dockerhubUser + "/" + env.userName + "-" + env.appName + "-" + env.tierTwo + "-img:" + env.newVersion
+
+        // Pushing the new images to DockerHub
+        echo "**********Pushing Docker Images $newImageOne DockerHub**********"
+        sh "docker push $newImageOne"
+        echo "**********Pushing Docker Images $newImageTwo DockerHub**********"
+        sh "docker push $newImageTwo"
+
+        // Pushing the latest images to DockerHub
+        echo "**********Pushing Docker Images $latestImageOne DockerHub**********"
+        sh "docker push $latestImageOne"
+        echo "**********Pushing Docker Images $latestImageTwo DockerHub**********"
+        sh "docker push $latestImageTwo"
+        
+        echo "**********Docker Images Pushed to DockerHub Successfully**********"
     }
 }

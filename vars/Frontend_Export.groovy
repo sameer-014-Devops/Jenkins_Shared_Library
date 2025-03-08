@@ -3,7 +3,7 @@ def call(){
     script {
 
         def ipv4Address = env.tierOneIP
-        def filePath = '.env.docker'
+        def filePath = './.env.docker'
         def file = new File(filePath)
     
         if (!file.exists()) {

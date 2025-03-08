@@ -9,7 +9,7 @@ def call() {
                 def userVersion = input(
                     message: 'Please Provide The Version Of The Web Application',
                     ok: 'Submit',
-                    parameters: [string(defaultValue: env.defaultVersion, description: 'Provide a new version number', name: 'newVersion')]
+                    parameters: [string(defaultValue: env.defaultVersion, description: 'Provide a new version', name: 'newVersion')]
                 )
                 // If input is provided, set it as the new version
                 env.newVersion = userVersion

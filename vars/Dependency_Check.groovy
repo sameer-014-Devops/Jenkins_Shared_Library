@@ -2,8 +2,8 @@ def call() {
     
     try {
         echo "**********Starting Dependency Check**********"
-        dependencyCheck additionalArguments: "--scan ./", odcInstallation: 'OWASP'
-        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        dependency-check additionalArguments: "--scan ./", odcInstallation: 'OWASP'
+        dependency-checkPublisher pattern: '**/dependency-check-report.xml'
         echo "**********Dependency Check Completed**********"
     } catch (Exception e) {
         echo "**********Dependency Check Failed**********"
